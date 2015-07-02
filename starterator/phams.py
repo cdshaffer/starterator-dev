@@ -227,18 +227,18 @@ class Pham(object):
         genes_without_most_called = []
         print genes_start_most_called
         for gene in self.genes.values():
-            if gene.gene_id in start_stats["possible"][most_called_start_index]:
-                if gene.gene_id in genes_start_most_called:
+            if gene.gene_id in start_stats["possible"][most_called_start_index]: #current gene has start codon at most called start
+                if gene.gene_id in genes_start_most_called:                      #current gene called at the most called start
                     gene.suggested_start["most_called"] =(most_called_start_index, gene.start+1)
                     #off by one error on suggested start: error genes get to here and gene.start is correct (no +1 needed)
                     start_stats["most_called"].append(gene.gene_id)
-                else:
+                else:                                                            #current gene not annotated with most called start
                     start_stats["most_not_called"].append(gene.gene_id)
                     most_called_alignment_index = self.total_possible_starts[most_called_start_index-1]
                     suggested_start = gene.alignment_index_to_coord(most_called_alignment_index)+1
                     gene.suggested_start["most_called"] = (most_called_start_index, suggested_start)
 
-            else:
+            else:                                                                 #gene does not have start codon at most called
                 start_stats["no_most_called"].append(gene.gene_id)
                 possible_starts_coords = []
                 for start in gene.alignment_candidate_starts:
