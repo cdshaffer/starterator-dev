@@ -154,7 +154,9 @@ def combine_graphs(args, phage, pham_no, num_pages):
     merger.write(open(os.path.join(args.dir, "%sPham%sGraph.pdf"  % (phage + args.one_or_all, pham_no)), "wb"))
 
 def make_gene_track(gd_diagram, pham, gene_group, num_on_diagram, total):
-    """"""
+    """
+
+    """
     colors = ['purple', 'red', 'green', 'orange', 'yellow', 'brown'] 
     gene = gene_group[0]
     gd_gene_track = gd_diagram.new_track(total - num_on_diagram, name='Track %s'  % (num_on_diagram+1), 
@@ -225,7 +227,7 @@ def graph_start_sites(args, pham, file_path):
             add_pham_no_title(args, args.pham_no, graph_path, str(i))
 
         combine_graphs(args, args.phage, pham.pham_no, i)
-    else:  
+    else:   # there are at most 100 genes, so put all maps on one page
         final_graph_path = os.path.join(file_path, "Pham%sGraph_.pdf" % (pham.pham_no)) if not args.phage else os.path.join(file_path, "%sPham%sGraph_.pdf" % (args.phage+args.one_or_all, pham.pham_no))        
         # graph_path_svg = "%sPham%sGraph.svg" % (file_path+args.phage+ args.one_or_all, pham.pham_no)
         graph_path = os.path.join(file_path, "Pham%sGraph_.pdf" % (pham.pham_no)) if not args.phage else  os.path.join(file_path,"%sPham%sGraph_.pdf" % (args.phage, pham.pham_no))

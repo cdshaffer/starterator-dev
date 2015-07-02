@@ -186,6 +186,14 @@ class PhamGene(Gene):
         self.phage_id = phage_id
         self.start = start
         self.stop = stop
+
+        if orientation == '+':
+            self.origStartcodon = start
+            self.origStopcodon = stop
+        else:
+            self.origStartcodon = stop
+            self.origStopcodon = start
+
         self.orientation = orientation
         self.pham_no = pham_no
         # self.translation
