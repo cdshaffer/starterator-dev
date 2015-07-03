@@ -190,11 +190,11 @@ class PhamGene(Gene):
         self.originalStop = stop
 
         if orientation == 'F':
-            self.origStartcodon = start+1
-            self.origStopcodon = stop
+            self.imputedStart = start+1
+            self.imputedStop = stop
         else:
-            self.origStartcodon = stop
-            self.origStopcodon = start+1
+            self.imputedStart = stop
+            self.imputedStop = start+1
 
         self.orientation = orientation
         self.pham_no = pham_no
