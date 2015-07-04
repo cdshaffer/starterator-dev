@@ -207,13 +207,13 @@ def graph_start_sites(args, pham, file_path):
 
             for j in xrange(0, 50):
                 if i*50 + j >= len(genes):
-                    print i * 50, + j, len(genes)
+                    #print i * 50, + j, len(genes)
                     gd_gene_track = gd_diagram.new_track(50-j)
                     gd_feature_set = gd_gene_track.new_set()
                     empty_feature = SeqFeature(FeatureLocation(0,1), 
                             strand=None)
                     gd_feature_set.add_feature(empty_feature, color="black", label=True)
-                    print 'blank track added'
+                    #print 'blank track added'
                 else:
                     gene = genes[i*50 + j][0]
                     make_gene_track(gd_diagram, pham, genes[i*50 + j], j, 50)
@@ -238,7 +238,7 @@ def graph_start_sites(args, pham, file_path):
             gd_diagram = GenomeDiagram.Diagram(pham.pham_no)
             i = 0
             for gene_group in genes:
-                print 'group', i
+                #print 'group', i
                 make_gene_track(gd_diagram, pham, gene_group, i, len(genes))
                 i += 1
             gd_diagram.draw(format="linear", orientation="portrait", pagesize=letter, 

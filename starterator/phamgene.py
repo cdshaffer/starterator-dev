@@ -186,8 +186,8 @@ class PhamGene(Gene):
         self.phage_id = phage_id
         self.start = start
         self.stop = stop
-        self.originalStart = start
-        self.originalStop = stop
+        self.lend = start
+        self.rend = stop
 
         if orientation == 'F':
             self.imputedStart = start+1
