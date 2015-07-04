@@ -230,13 +230,13 @@ class Pham(object):
                     gene.suggested_start["most_called"] =(most_called_start_index, gene.start+1)
                     #off by one error on suggested start: error genes get to here and gene.start is correct (no +1 needed)
                     start_stats["most_called"].append(gene.gene_id)
-
                     with open('/home/seastudent/Desktop/offbyone.txt', 'a') as f:
-                        f.write("F, ")
-                        if gene.orientation == 'R':
-                            f.write('\nGene: ' + str(gene.gene_id) + ' at ' + str(gene.imputedStart) + str(gene.orientation))
-                            if gene.imputedStart != gene.suggested_start["most_called"][1]:
-                                f.write(' OFF by one ' + str( gene.suggested_start["most_called"][1]))
+                        f.write(str(gene.orientation) + ', ' + str(gene.imputedStart) + ', ' + str( gene.suggested_start["most_called"][1]) )
+                        if gene.imputedStart != gene.suggested_start["most_called"][1]:
+                            f.write(' OFF by one ' + '\n')
+                        else:
+                            f.write('\n')
+
                 else:                                                            #current gene not annotated with most called start
                     start_stats["most_not_called"].append(gene.gene_id)
                     most_called_alignment_index = self.total_possible_starts[most_called_start_index-1]
