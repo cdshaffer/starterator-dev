@@ -274,7 +274,10 @@ def make_pham_text(args, pham, pham_no, output_dir, only_pham=False):
     for index in range(len(groups)):
         text = "Track %s : " % (index+1)
         text += ", ".join(gene.gene_id for gene in groups[index])
-        tracks_info.append("<font size=12> "+ u'\u2022'+" %s</font>" % text)
+        bullet =  u'\u2022'
+        if args.phage in text:
+             bullet +=  u'\u2022'
+        tracks_info.append("<font size=12> " + bullet + " %s</font>" % text)
     for line in tracks_info:
         story.append(Paragraph(line, styles["Normal"]))
     story.append(Spacer(1, 12))
