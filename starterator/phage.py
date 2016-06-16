@@ -104,6 +104,13 @@ class Phage(object):
                 if row[3] < 0:                  #found one end spanning gene with -1 as start position
                     continue
 
+                #Code to skip problematic genes add all pham nums to this list
+                '''
+                phamsToSkip = [19513, 9297, 19153]
+                if row[1] in phamsToSkip:
+                    continue
+                '''
+
                 if row[1] not in self.phams:
                     self.phams[row[1]] = []
                 gene = phamgene.PhamGene(row[0], row[3], row[4], row[5], self.phage_id)
