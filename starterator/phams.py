@@ -182,8 +182,8 @@ class Pham(object):
                 "most_not_called" : a list of genes that have the "most common start" but do not call it
                 "no_most_called" : a list of genes that do no have the "most called start"
                 "possible" : a list containing lists of genes with the start of the index of self.total_possible_starts
-                "called_start: a list containing lists of genes with the called start of the index of self.total_possible_starts
-
+                "called_start: a dict containing lists of genes with the called start of the index of self.total_possible_starts
+                "uniques: a list of geneid (key in genes) that uniquely call a given start site"
 
             Also, for each gene in the pham, a suggested start is given, gene.suggested_start["most_commom"]
             For genes that have the most common start called (or not) a tuple containing the index of the
@@ -250,7 +250,13 @@ class Pham(object):
                     possible_starts_coords.append((index, new_start))
                 gene.suggested_start["most_called"] = possible_starts_coords
 
-
+        start_stats["uniques"] = []
+        start_count_min = all_starts_count.most_common()[::-1]
+        for start, count in start_count_min:
+            if count > 1:
+                break
+            else:
+                start_stats["uniques"].append(start)
         self.stats["most_common"] = start_stats
         return start_stats
 

@@ -76,7 +76,9 @@ def output_start_sites(stats):
         """
             Writes a report of the start sites statistics
             Returns a list of strings with information about
-            start sites for this pham  
+            start sites for this pham
+
+            TODO: Add anomylator code here to report the anomylous genes.
         """
         most_called_start = stats["most_called_start"]
         total_genes = len(stats["most_called"])+ len(stats["most_not_called"]) + len(stats["no_most_called"])
