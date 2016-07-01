@@ -181,9 +181,10 @@ class Pham(object):
                 "most_called" : a list of genes currently call the "most common start"
                 "most_not_called" : a list of genes that have the "most common start" but do not call it
                 "no_most_called" : a list of genes that do no have the "most called start"
-                "possible" : a list containing lists of genes with the start of the index of self.total_possible_starts
-                "called_start: a dict containing lists of genes with the called start of the index of self.total_possible_starts
-                "uniques: a list of geneid (key in genes) that uniquely call a given start site"
+                "possible" : a dict containing lists of genes with the start of the index of self.total_possible_starts
+                "called_start: : a dict containing lists of genes with the called start of the index of self.total_possible_starts
+                "uniques" : a list of geneid (i.e. tkey keys in genes dict) that uniquely call a given start site"
+                "annotated_counts" : a dict of the number of non-draft genes with called start at each possible start
 
             Also, for each gene in the pham, a suggested start is given, gene.suggested_start["most_commom"]
             For genes that have the most common start called (or not) a tuple containing the index of the
@@ -257,6 +258,21 @@ class Pham(object):
                 break
             else:
                 start_stats["uniques"].append(start)
+
+        annotated_starts = {}
+        for key in start_stats["called_starts"].keys():
+            if len(start_stats["called_starts"][key]) > 0:
+                non_draft_list = []
+                for item in start_stats["called_starts"][key]:
+                    if not self.genes[item].draftStatus:
+                        non_draft_list.append(item)
+
+                non_draft_list_length = len(non_draft_list)
+                if non_draft_list_length > 0:
+                    annotated_starts[key] = non_draft_list
+
+
+        start_stats["annotated_starts"] = annotated_starts
         self.stats["most_common"] = start_stats
         return start_stats
 
