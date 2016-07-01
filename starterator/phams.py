@@ -184,6 +184,7 @@ class Pham(object):
                 "possible" : a list containing lists of genes with the start of the index of self.total_possible_starts
                 "called_start: a list containing lists of genes with the called start of the index of self.total_possible_starts
 
+
             Also, for each gene in the pham, a suggested start is given, gene.suggested_start["most_commom"]
             For genes that have the most common start called (or not) a tuple containing the index of the
             most common start and the coordinate of the sequence is given.
