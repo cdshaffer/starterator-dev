@@ -159,8 +159,8 @@ def make_gene_track(gd_diagram, pham, gene_group, num_on_diagram, total):
     """"""
     colors = ['purple', 'red', 'lightblue', 'orange', 'tan', 'brown']
     gene = gene_group[0]
-    gd_gene_track = gd_diagram.new_track(total - num_on_diagram, name='Track %s'  % (num_on_diagram+1), 
-                            label=True, greytrack=1)
+    gd_gene_track = gd_diagram.new_track(total - num_on_diagram, label=True,
+                                         name=gene.gene_id, greytrack=1)
     gd_seq_set = gd_gene_track.new_set()
     gd_feature_set = gd_gene_track.new_set()
 
