@@ -280,7 +280,6 @@ class Pham(object):
 
 
         self.stats["most_common"] = start_stats
-        #self.stats["annotated_starts"] = annotated_starts
-        #self.stats["annoated_counts"] = annotated_counts
+
         return start_stats
 
