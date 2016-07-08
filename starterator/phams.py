@@ -175,16 +175,17 @@ class Pham(object):
 
     def find_most_common_start(self, ignore_draft=False):
         """
-            From the total candidate strats of each gene in the pham and all the start
+            From the total candidate strats of all genes in the pham and all the start
             called in each gene, finds the start that is most commonly called.
             Returns a dictionary containing:
                 "most_called" : a list of genes currently call the "most common start"
                 "most_not_called" : a list of genes that have the "most common start" but do not call it
                 "no_most_called" : a list of genes that do no have the "most called start"
-                "possible" : a dict containing lists of genes with the start of the index of self.total_possible_starts
+                "possible" : a dict, keys: start incex, value: lists of genes with that start
                 "called_start: : a dict containing lists of genes with the called start of the index of self.total_possible_starts
                 "uniques" : a list of geneid (i.e. tkey keys in genes dict) that uniquely call a given start site"
-                "annotated_counts" : a dict of the number of non-draft genes with called start at each possible start
+                "annotated_starts" : a dict, key: annotated start, value: list of non-draft genes with that called start
+                "annotated_counts" : a dict, key: annotated start, value: number of genes with that as annotated start
 
             Also, for each gene in the pham, a suggested start is given, gene.suggested_start["most_commom"]
             For genes that have the most common start called (or not) a tuple containing the index of the
@@ -270,9 +271,14 @@ class Pham(object):
                 non_draft_list_length = len(non_draft_list)
                 if non_draft_list_length > 0:
                     annotated_starts[key] = non_draft_list
-
-
         start_stats["annotated_starts"] = annotated_starts
+
+        annotated_counts = {}
+        for key in start_stats["annotated_starts"]:
+            annotated_counts[key] = len(start_stats["annotated_starts"][key])
+        start_stats["annotated_counts"] = annotated_counts
+
+
         self.stats["most_common"] = start_stats
         return start_stats
 
