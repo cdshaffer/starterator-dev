@@ -181,7 +181,7 @@ class Pham(object):
                 "most_called" : a list of genes currently call the "most common start"
                 "most_not_called" : a list of genes that have the "most common start" but do not call it
                 "no_most_called" : a list of genes that do no have the "most called start"
-                "possible" : a dict, keys: start incex, value: lists of genes with that start
+                "possible" : a dict, keys: start index, value: lists of genes with that start
                 "called_start: : a dict containing lists of genes with the called start of the index of self.total_possible_starts
                 "uniques" : a list of geneid (i.e. tkey keys in genes dict) that uniquely call a given start site"
                 "annotated_starts" : a dict, key: annotated start, value: list of non-draft genes with that called start
