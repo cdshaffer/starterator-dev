@@ -11,4 +11,9 @@
 # Anomalyzer function
 
 
-import
+def anomalyze(pham, level=1):
+    print "Start anomalization on pham: " + pham.pham_no
+
+    #check if any annotated starts agree with level or fewer genes (i.e. level 1 = unique call, level 2 has one other match
+
+    if min(pham.stats['most_common']['annotated_counts']) <= level:    #pham has at least one that needs reporting

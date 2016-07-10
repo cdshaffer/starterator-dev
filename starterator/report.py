@@ -25,6 +25,7 @@ import os
 from utils import StarteratorError
 import csv
 import annotate
+import anomalyze
 
 class Report(object):
     def __init__(self, name=None):
@@ -368,8 +369,10 @@ class PhamReport(Report):
         f = open(pickle_file, "wb")
         cPickle.dump(self.pham, f)
         f.close()
-        args = ["-n", self.pham_no, "-f", pickle_file, '-m', "text"]
-        self.make_file(args)
+        anomalzation = anomalyze(self.pham)
+
+        # args = ["-n", self.pham_no, "-f", pickle_file, '-m', "text"]
+        # self.make_file(args)
 
     def merge_report(self):
         merger = PyPDF2.PdfFileMerger()
