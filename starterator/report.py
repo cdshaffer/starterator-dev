@@ -359,7 +359,7 @@ class PhamReport(Report):
     
     def final_report(self):
         self.make_report()
-        return self.merge_report()
+        return #self.merge_report()
 
     def make_report(self):
         self.pham = phams.Pham(self.pham_no)  # Build the pham and fill with sequences

@@ -168,7 +168,7 @@ def main():
         final_file, short_final = phage.final_report()
     elif args.phage == None:
         pham = report.PhamReport(args.pham_no)
-        final_file, short_final = pham.final_report()
+        pham.final_report()
     # clean_up_files()
     # email_final_report(args.email, short_final)
 

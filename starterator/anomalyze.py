@@ -22,11 +22,11 @@ def anomalyzer(pham, level=1):
     start_counts = pham.stats['most_common']['annotated_counts']
     starts = pham.stats['most_common']['annotated_starts']
     #check if any annotated starts agree with level or fewer genes (i.e. level 1 = unique call, level 2 has one other match
-    anomalies = {}
 
     if min(start_counts.values()) > level:
         return None
 
+    anomalies = {}
     for key, value in starts.iteritems():
         if len(starts[key]) <= level:
             for gene in value:
