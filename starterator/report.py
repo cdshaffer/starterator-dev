@@ -369,7 +369,7 @@ class PhamReport(Report):
         f = open(pickle_file, "wb")
         cPickle.dump(self.pham, f)
         f.close()
-        anomalies = anomalyzer(self.pham)
+        anomalies = anomalyzer(self.pham, 2)
         report_file = os.path.join(self.output_dir, "phamReports.tsv")
         with open(report_file, 'a') as f:
             for key,value in anomalies.iteritems():

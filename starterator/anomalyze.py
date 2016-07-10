@@ -11,6 +11,11 @@
 # Anomalyzer function
 
 
+def score_anomaly(gene, pham):
+    return 8.1
+
+
+
 def anomalyzer(pham, level=1):
     print "Start anomalization on pham: " + pham.pham_no
     start_counts = pham.stats['most_common']['annotated_counts']
@@ -23,7 +28,9 @@ def anomalyzer(pham, level=1):
 
     for key, value in starts.iteritems():
         if len(starts[key]) <= level:
-            anomalies[value[0]] = 7
+            for gene in value:
+                anomaly_score =  score_anomaly(gene, pham)
+                anomalies[gene] = anomaly_score
 
 
     return anomalies
