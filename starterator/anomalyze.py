@@ -12,6 +12,7 @@
 
 
 def score_anomaly(gene, pham):
+    print "scoring level of anomaly for gene " + gene
     return 8.1
 
 
