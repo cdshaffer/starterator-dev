@@ -372,10 +372,13 @@ class PhamReport(Report):
         anomalies = anomalyzer(self.pham)
         report_file = os.path.join(self.output_dir, "phamReports.tsv")
         with open(report_file, 'a') as f:
-            for key,value in anomalies:
-                entry = "\t".join([key, value])
+            for key,value in anomalies.iteritems():
+                entry_list = map(str, [key, value])
+                entry = "\t".join(entry_list)
                 f.write(entry)
                 f.write("\n")
+
+        print "Done"
 
         # args = ["-n", self.pham_no, "-f", pickle_file, '-m', "text"]
         # self.make_file(args)

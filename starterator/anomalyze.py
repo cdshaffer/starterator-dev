@@ -21,9 +21,9 @@ def anomalyzer(pham, level=1):
     if min(start_counts.values()) > level:
         return None
 
-    for key, value in starts:
+    for key, value in starts.iteritems():
         if len(starts[key]) <= level:
-            anomalies[key] = 7
+            anomalies[value[0]] = 7
 
 
     return anomalies
