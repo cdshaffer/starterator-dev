@@ -25,7 +25,7 @@ import os
 from utils import StarteratorError
 import csv
 import annotate
-import anomalyze
+from anomalyze import anomalyzer
 
 class Report(object):
     def __init__(self, name=None):
@@ -369,7 +369,7 @@ class PhamReport(Report):
         f = open(pickle_file, "wb")
         cPickle.dump(self.pham, f)
         f.close()
-        anomalzation = anomalyze(self.pham)
+        anomalzation = anomalyzer(self.pham)
 
         # args = ["-n", self.pham_no, "-f", pickle_file, '-m', "text"]
         # self.make_file(args)
