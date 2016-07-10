@@ -361,7 +361,7 @@ class PhamReport(Report):
         return self.merge_report()
 
     def make_report(self):
-        self.pham = phams.Pham(self.pham_no)
+        self.pham = phams.Pham(self.pham_no)  # Build the pham and fill with sequences
         self.pham.align()
         self.pham.find_most_common_start()
         pickle_file = os.path.join(self.output_dir, "%s.pickle" % (self.pham.pham_no)) #TODO: Figure out base name things
