@@ -13,6 +13,21 @@
 
 def score_anomaly(gene, pham):
     print "scoring level of anomaly for gene " + gene
+
+    #find all available starts
+
+    keylist = pham.stats['most_common']['annotated_starts'].keys()
+    longest_genelist = keylist[0]
+    sum = 0
+
+    for start, genelist in pham.stats['most_common']['annotated_starts'].iteritems():
+
+        if gene in genelist:
+            sum += len(genelist)
+            if len(genelist) > longest_genelist:
+                longest_genelist = genelist
+
+
     return 8.1
 
 
