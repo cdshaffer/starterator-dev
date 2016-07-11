@@ -31,11 +31,8 @@ def score_anomaly(gene, pham):
     # max_index in the index of that start with max
 
 
-    #now calculate how many genes in total have max_index available other than gene (i.e. total minus 1)
-    max_index_possible = len(pham.stats['most_common']['possible'][max_index])-1
 
-    max_fraction = max_count/max_index_possible  # the number that called that start over number with that start available
-    max_power = max_fraction * max_count  #the more called the more "powerful" the annotation
+    max_power =  pham.stats['most_common']['annotated_power'][max_index]
 
     return max_power, max_index
 
