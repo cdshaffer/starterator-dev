@@ -371,8 +371,8 @@ class PhamReport(Report):
         f.close()
         anomalies = anomalyzer(self.pham, 1)
 
+        report_file = os.path.join(self.output_dir, "phamReports.tsv")
         if anomalies:
-            report_file = os.path.join(self.output_dir, "phamReports.tsv")
             with open(report_file, 'a') as f:
                 for key,best_candidate in anomalies.iteritems():
                     entry_list = [str(self.pham.pham_no), str(key), str(best_candidate.keys()[0]) , str(best_candidate.values()[0])]
