@@ -20,13 +20,15 @@ def score_anomaly(gene, pham):
     longest_genelist = keylist[0]
     sum = 0
 
-    for start, genelist in pham.stats['most_common']['annotated_starts'].iteritems():
+    for start, genelist in pham.stats['most_common']['possible'].iteritems():
 
         if gene in genelist:
             sum += len(genelist)
             if len(genelist) > longest_genelist:
                 longest_genelist = genelist
 
+
+    print str(sum) + ", " + str(len(longest_genelist))
 
     return 8.1
 
