@@ -284,7 +284,6 @@ class Pham(object):
             annotated_power[key] = annotated_counts[key] * (annotated_counts[key]/ (1.0 * len(start_stats['possible'][key])))
 
         start_stats["annotated_power"] = annotated_power
-        print "donw with power calc"
 
         self.stats["most_common"] = start_stats
 
