@@ -273,11 +273,18 @@ class Pham(object):
                     annotated_starts[key] = non_draft_list
         start_stats["annotated_starts"] = annotated_starts
 
+        # now cacluate the "power" of each annotated start, which is the fraction of time it is called when available * number of times called
         annotated_counts = {}
         for key in start_stats["annotated_starts"]:
             annotated_counts[key] = len(start_stats["annotated_starts"][key])
         start_stats["annotated_counts"] = annotated_counts
 
+        annotated_power = {}
+        for key in  start_stats["annotated_starts"].keys():
+            annotated_power[key] = annotated_counts[key] * (annotated_counts[key]/ (1.0 * len(start_stats['possible'][key])))
+
+        start_stats["annotated_power"] = annotated_power
+        print "donw with power calc"
 
         self.stats["most_common"] = start_stats
 
