@@ -14,23 +14,30 @@
 def score_anomaly(gene, pham):
     print "scoring level of anomaly for gene " + gene
 
-    #find all available starts
+    #find most annotated start of the available starts in the gene
 
-    keylist = pham.stats['most_common']['annotated_starts'].keys()
-    longest_genelist = keylist[0]
-    sum = 0
+    available_alignment_starts = pham.genes[gene].alignment_candidate_starts
+    available_starts = [ pham.total_possible_starts.index(aas)+1 for aas in available_alignment_starts]
 
-    for start, genelist in pham.stats['most_common']['possible'].iteritems():
+    #find the most numberous of the annotated starts out of the list of available
+    max_count = 0
+    for start_index in available_starts:
+        if start_index in pham.stats['most_common']['annotated_starts'].keys():
+            if pham.stats['most_common']['annotated_counts'][start_index] > max_count:
+                max_count = pham.stats['most_common']['annotated_counts'][start_index]
+                max_index = start_index
 
-        if gene in genelist:
-            sum += len(genelist)
-            if len(genelist) > longest_genelist:
-                longest_genelist = genelist
+    # max_count has the number of genes with the maximum number of annotations of all starts in gene
+    # max_index in the index of that start with max
 
 
-    print str(sum) + ", " + str(len(longest_genelist))
+    #now calculate how many genes in total have max_index available other than gene (i.e. total minus 1)
+    max_index_possible = len(pham.stats['most_common']['possible'][max_index])-1
 
-    return 8.1
+    max_fraction = max_count/max_index_possible  # the number that called that start over number with that start available
+    max_power = max_fraction * max_count  #the more called the more "powerful" the annotation
+
+    return max_power, max_index
 
 
 
@@ -47,8 +54,8 @@ def anomalyzer(pham, level=1):
     for key, value in starts.iteritems():
         if len(starts[key]) <= level:
             for gene in value:
-                anomaly_score =  score_anomaly(gene, pham)
-                anomalies[gene] = anomaly_score
+                best_candidate_power, best_candidate_index =  score_anomaly(gene, pham)
+                anomalies[gene] = {best_candidate_index:best_candidate_power}
 
 
     return anomalies
