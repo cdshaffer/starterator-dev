@@ -281,7 +281,7 @@ class Pham(object):
 
         annotated_power = {}
         for key in  start_stats["annotated_starts"].keys():
-            annotated_power[key] = annotated_counts[key] * (annotated_counts[key]/ (1.0 * len(start_stats['possible'][key])))
+            annotated_power[key] = annotated_counts[key] * (annotated_counts[key]/ (1.0 * len(start_stats['possible'][key]))) #TODO update to only count non-draft
 
         start_stats["annotated_power"] = annotated_power
 
