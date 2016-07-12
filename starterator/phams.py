@@ -8,6 +8,7 @@ from collections import Counter
 import utils
 import subprocess
 import os
+import math
 from utils import StarteratorError
 
 
@@ -296,7 +297,10 @@ class Pham(object):
             pseudo_possible = annotated_possibles[key] + 0.1
             pseudo_percent = pseudo_annotated / pseudo_possible
 
-            annotated_power[key] =  math.log(pseudo_annotated) * math.log(pseudo_percent) * pseudo_percent * pseudo_percent
+            a = math.log(pseudo_annotated)
+            b = math.log(pseudo_percent)
+
+            annotated_power[key] =  math.log(pseudo_annotated) + math.log(pseudo_percent) * pseudo_percent
 
         start_stats["annotated_power"] = annotated_power
 
