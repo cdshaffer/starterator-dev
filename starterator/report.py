@@ -365,13 +365,13 @@ class PhamReport(Report):
         self.pham = phams.Pham(self.pham_no)  # Build the pham and fill with sequences
         self.pham.align()
         self.pham.find_most_common_start()
-        pickle_file = os.path.join(self.output_dir, "%s.pickle" % (self.pham.pham_no)) #TODO: Figure out base name things
+        pickle_file = os.path.join(self.final_dir, "%s.pickle" % (self.pham.pham_no)) #TODO: Figure out base name things
         f = open(pickle_file, "wb")
         cPickle.dump(self.pham, f)
         f.close()
         anomalies = anomalyzer(self.pham, 1)
 
-        report_file = os.path.join(self.output_dir, "phamReports.tsv")
+        report_file = os.path.join(self.final_dir, "phamReports.tsv")
         if anomalies:
             with open(report_file, 'a') as f:
                 for key,best_candidate in anomalies.iteritems():
