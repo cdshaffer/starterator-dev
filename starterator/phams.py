@@ -279,9 +279,24 @@ class Pham(object):
             annotated_counts[key] = len(start_stats["annotated_starts"][key])
         start_stats["annotated_counts"] = annotated_counts
 
+        annotated_possibles = {}
+        for key in start_stats["annotated_starts"]:
+            sum = 0
+            for gene in start_stats["possible"][key]:
+                if not self.genes[gene].draftStatus:
+                    sum += 1
+            annotated_possibles[key] = sum
+
+
+
         annotated_power = {}
+        # need psudocounts for taking logs
         for key in  start_stats["annotated_starts"].keys():
-            annotated_power[key] = annotated_counts[key] * (annotated_counts[key]/ (1.0 * len(start_stats['possible'][key]))) #TODO update to only count non-draft
+            pseudo_annotated = annotated_counts[key] + 0.1
+            pseudo_possible = annotated_possibles[key] + 0.1
+            pseudo_percent = pseudo_annotated / pseudo_possible
+
+            annotated_power[key] =  math.log(pseudo_annotated) * math.log(pseudo_percent) * pseudo_percent * pseudo_percent
 
         start_stats["annotated_power"] = annotated_power
 
