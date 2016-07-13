@@ -375,7 +375,18 @@ class PhamReport(Report):
         if anomalies:
             with open(report_file, 'a') as f:
                 for key,best_candidate in anomalies.iteritems():
-                    entry_list = [str(self.pham.pham_no), str(key), str(best_candidate.keys()[0]) , str(best_candidate.values()[0])]
+                    phage_name = self.pham.genes[key].phage_id
+                    gene_no = self.pham.genes[key].gene_id
+                    annotated_start = self.pham.genes[key].start
+                    recommended_start_number = best_candidate.keys()[0]
+                    if len(self.pham.genes[key].suggested_start['most_called']) == 1:
+                        recommended_start_coord = self.pham.genes[key].suggested_start['most_called'][1]
+                    else:
+                        recommended_start_tuple = [item for item in self.pham.genes[key].suggested_start['most_called' where item[0] == recommended_start_number]
+                        recommended_start_coord = recommended_start_tuple[1]
+
+
+                    entry_list = [str(self.pham.pham_no), phage_name, gene_no, str(annotated_start), str(best_candidate.keys()[0]) , str(recommended_start_coord), str(best_candidate.values()[0])]
                     entry = "\t".join(entry_list)
                     f.write(entry)
                     f.write("\n")
