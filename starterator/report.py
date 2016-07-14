@@ -370,6 +370,10 @@ class PhamReport(Report):
         cPickle.dump(self.pham, f)
         f.close()
         geneCount = len(self.pham.genes)
+
+        presenceCount = geneCount  # change this formula  to one below if searching for less than 100% conservation
+
+        # presenceCount = int(geneCount * .9) # for example 90% conserved
         conservedStarts = []
         for start, startList in self.pham.stats['most_common']['possible'].iteritems():
             if len(startList) == geneCount:
@@ -379,21 +383,14 @@ class PhamReport(Report):
 
 
         report_file = os.path.join(self.final_dir, "conservedPhamReport.tsv")
-        if anomalies:
+        if len(conservedStarts) > 0:
             with open(report_file, 'a') as f:
-                for key,best_candidate in anomalies.iteritems():
-                    phage_name = self.pham.genes[key].phage_id
-                    gene_no = self.pham.genes[key].gene_id
-                    annotated_start = self.pham.genes[key].start
-                    recommended_start_number = best_candidate.keys()[0]
-                    if len(self.pham.genes[key].suggested_start['most_called']) == 1:
-                        recommended_start_coord = self.pham.genes[key].suggested_start['most_called'][1]
-                    else:
-                        recommended_start_tuple = [item for item in self.pham.genes[key].suggested_start['most_called'] if item[0] == recommended_start_number]
-                        recommended_start_coord = recommended_start_tuple[1]
-
-
-                    entry_list = [str(self.pham.pham_no), phage_name, gene_no, str(annotated_start), str(best_candidate.keys()[0]) , str(recommended_start_coord), str(best_candidate.values()[0])]
+                for start in conservedStarts:
+                    if start in self.pham.stats['most_common']['annotated_starts'].keys():
+                        num_annotations = len(self.pham.stats['most_common']['annotated_counts'][start])
+                        entry_list = [str(self.pham.pham_no), str(start), str(num_annotations),
+                                      str(self.pham.stats['most_common']['possible'][start]),
+                                      str(geneCount)]
                     entry = "\t".join(entry_list)
                     f.write(entry)
                     f.write("\n")
