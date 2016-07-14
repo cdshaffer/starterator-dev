@@ -383,19 +383,20 @@ class PhamReport(Report):
 
 
         report_file = os.path.join(self.final_dir, "conservedPhamReport.tsv")
-        if len(conservedStarts) > 0:
-            with open(report_file, 'a') as f:
+        with open(report_file, 'a') as f:
+            if len(conservedStarts) > 0:
                 for start in conservedStarts:
                     if start in self.pham.stats['most_common']['annotated_starts'].keys():
-                        num_annotations = len(self.pham.stats['most_common']['annotated_counts'][start])
-                        entry_list = [str(self.pham.pham_no), str(start), str(num_annotations),
+                        num_annotations = self.pham.stats['most_common']['annotated_counts'][start]
+                        entry_list = [str(self.pham.pham_no),
+                                      str(start),
+                                      str(num_annotations),
                                       str(self.pham.stats['most_common']['possible'][start]),
                                       str(geneCount)]
-                    entry = "\t".join(entry_list)
-                    f.write(entry)
-                    f.write("\n")
-        else:
-            with open(report_file, 'a') as f:
+                        entry = "\t".join(entry_list)
+                        f.write(entry)
+                        f.write("\n")
+            else:
                 f.write(str(self.pham.pham_no) + "\n")
 
         print "Done"
