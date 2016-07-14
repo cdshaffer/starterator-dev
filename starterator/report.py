@@ -369,9 +369,9 @@ class PhamReport(Report):
         f = open(pickle_file, "wb")
         cPickle.dump(self.pham, f)
         f.close()
-        anomalies = anomalyzer(self.pham, 1)
+        conservation = 2
 
-        report_file = os.path.join(self.final_dir, "phamReports.tsv")
+        report_file = os.path.join(self.final_dir, "conservedPhamReport.tsv")
         if anomalies:
             with open(report_file, 'a') as f:
                 for key,best_candidate in anomalies.iteritems():
@@ -382,7 +382,7 @@ class PhamReport(Report):
                     if len(self.pham.genes[key].suggested_start['most_called']) == 1:
                         recommended_start_coord = self.pham.genes[key].suggested_start['most_called'][1]
                     else:
-                        recommended_start_tuple = [item for item in self.pham.genes[key].suggested_start['most_called' where item[0] == recommended_start_number]
+                        recommended_start_tuple = [item for item in self.pham.genes[key].suggested_start['most_called' if item[0] == recommended_start_number]
                         recommended_start_coord = recommended_start_tuple[1]
 
 

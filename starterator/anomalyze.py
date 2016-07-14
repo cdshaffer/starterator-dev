@@ -39,6 +39,7 @@ def score_anomaly(gene, pham):
 
 
 def anomalyzer(pham, level=1):
+
     print "Start anomalization on pham: " + pham.pham_no
     start_counts = pham.stats['most_common']['annotated_counts']
     starts = pham.stats['most_common']['annotated_starts']
