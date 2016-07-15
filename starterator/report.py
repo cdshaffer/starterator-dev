@@ -391,8 +391,10 @@ class PhamReport(Report):
                         entry_list = [str(self.pham.pham_no),
                                       str(start),
                                       str(num_annotations),
-                                      str(self.pham.stats['most_common']['possible'][start]),
-                                      str(geneCount)]
+                                      str(len( self.pham.stats['most_common']['possible'][start])),
+                                      str(geneCount),
+                                      str(self.pham.stats['most_common']['possible'][start])
+                        ]
                         entry = "\t".join(entry_list)
                         f.write(entry)
                         f.write("\n")
