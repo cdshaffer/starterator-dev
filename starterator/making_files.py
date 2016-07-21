@@ -155,7 +155,7 @@ def combine_graphs(args, phage, pham_no, num_pages):
 
 def make_gene_track(gd_diagram, pham, gene_group, num_on_diagram, total):
     """"""
-    colors = ['purple', 'red', 'lightblue', 'orange', 'tan', 'brown']
+    colorList = ['purple', 'red', 'lightblue', 'orange', 'tan', 'brown']
     gene = gene_group[0]
 
     #change trackname to name of fist gene in list
@@ -175,11 +175,11 @@ def make_gene_track(gd_diagram, pham, gene_group, num_on_diagram, total):
         if feature.type == 'seq':
             gd_seq_set.add_feature(feature, color='pink')
     for site in gene.alignment_candidate_starts:
-        site_color = pham.total_possible_starts.index(site) % len(colors) 
+        site_color = pham.total_possible_starts.index(site) % len(colorList)
         possible_site = SeqFeature(FeatureLocation(site, site ), strand=None)
-        gd_feature_set.add_feature(possible_site, color=colors[site_color], 
-            name=str(pham.total_possible_starts.index(site)+1), label=True)
-    end_gene_feature = SeqFeature(FeatureLocation(len(gene.alignment), 
+        gd_feature_set.add_feature(possible_site, color=colorList[site_color],
+            name=str(pham.total_possible_starts.index(site)+1), label=True, label_color=colors.lightgreen )
+    end_gene_feature = SeqFeature(FeatureLocation(len(gene.alignment),
                         len(gene.alignment)+1), strand=None)
 
     # draw blue called start only if non-draft gene in gene group, if all draft use yellow
