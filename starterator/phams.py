@@ -175,14 +175,17 @@ class Pham(object):
 
     def find_most_common_start(self, ignore_draft=False):
         """
-            From the total candidate strats of each gene in the pham and all the start
+            From the total candidate strats of all genes in the pham and all the start
             called in each gene, finds the start that is most commonly called.
             Returns a dictionary containing:
                 "most_called" : a list of genes currently call the "most common start"
                 "most_not_called" : a list of genes that have the "most common start" but do not call it
                 "no_most_called" : a list of genes that do no have the "most called start"
-                "possible" : a list containing lists of genes with the start of the index of self.total_possible_starts
-                "called_start: a list containing lists of genes with the called start of the index of self.total_possible_starts
+                "possible" : a dict, keys: start index, value: lists of genes with that start
+                "called_start: : a dict containing lists of genes with the called start of the index of self.total_possible_starts
+                "uniques" : a list of geneid (i.e. tkey keys in genes dict) that uniquely call a given start site"
+                "annotated_starts" : a dict, key: annotated start, value: list of non-draft genes with that called start
+                "annotated_counts" : a dict, key: annotated start, value: number of genes with that as annotated start
 
             Also, for each gene in the pham, a suggested start is given, gene.suggested_start["most_commom"]
             For genes that have the most common start called (or not) a tuple containing the index of the
@@ -249,7 +252,55 @@ class Pham(object):
                     possible_starts_coords.append((index, new_start))
                 gene.suggested_start["most_called"] = possible_starts_coords
 
+        start_stats["uniques"] = []
+        start_count_min = all_starts_count.most_common()[::-1]
+        for start, count in start_count_min:
+            if count > 1:
+                break
+            else:
+                start_stats["uniques"].append(start)
+
+        annotated_starts = {}
+        for key in start_stats["called_starts"].keys():
+            if len(start_stats["called_starts"][key]) > 0:
+                non_draft_list = []
+                for item in start_stats["called_starts"][key]:
+                    if not self.genes[item].draftStatus:
+                        non_draft_list.append(item)
+
+                non_draft_list_length = len(non_draft_list)
+                if non_draft_list_length > 0:
+                    annotated_starts[key] = non_draft_list
+        start_stats["annotated_starts"] = annotated_starts
+
+        # now cacluate the "power" of each annotated start, which is the fraction of time it is called when available * number of times called
+        annotated_counts = {}
+        for key in start_stats["annotated_starts"]:
+            annotated_counts[key] = len(start_stats["annotated_starts"][key])
+        start_stats["annotated_counts"] = annotated_counts
+
+        annotated_possibles = {}
+        for key in start_stats["annotated_starts"]:
+            sum = 0
+            for gene in start_stats["possible"][key]:
+                if not self.genes[gene].draftStatus:
+                    sum += 1
+            annotated_possibles[key] = sum
+
+
+
+        annotated_power = {}
+        # need psudocounts for taking logs
+        for key in  start_stats["annotated_starts"].keys():
+            pseudo_annotated = annotated_counts[key] + 0.1
+            pseudo_possible = annotated_possibles[key] + 0.1
+            pseudo_percent = pseudo_annotated / pseudo_possible
+
+            annotated_power[key] =  math.log(pseudo_annotated) + math.log(pseudo_percent) * pseudo_percent * pseudo_percent
+
+        start_stats["annotated_power"] = annotated_power
 
         self.stats["most_common"] = start_stats
+
         return start_stats
 
