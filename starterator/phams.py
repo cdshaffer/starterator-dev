@@ -6,6 +6,7 @@ from Bio import AlignIO
 from Bio import SeqIO
 from collections import Counter
 import utils
+import math
 import subprocess
 import os
 from utils import StarteratorError
